@@ -1,0 +1,17 @@
+{
+  "id": "nissan-standard",
+  "name": "Nissan MM521D-L（標準）",
+  "description": "MM521D-L 互換重視。H.264 High/Level4.0 720p 平均4000k固定。",
+  "profile": "high",
+  "level": "4.0",
+  "width": 1280,
+  "height": 720,
+  "frameRate": [30000, 1001],
+  "pixFmt": "yuv420p",
+  "x264Preset": "medium",
+  "rateControl": { "mode": "abr", "videoBitrateKbps": 4000 },
+  "audioCodec": "aac",
+  "audioBitrateKbps": 128,
+  "audioSampleRate": 48000,
+  "faststart": true
+}

@@ -1,0 +1,17 @@
+{
+  "id": "high-quality",
+  "name": "高画質",
+  "description": "互換枠を維持したまま画質優先。CRF18 + AAC192k、x264 slow。",
+  "profile": "high",
+  "level": "4.0",
+  "width": 1280,
+  "height": 720,
+  "frameRate": [30000, 1001],
+  "pixFmt": "yuv420p",
+  "x264Preset": "slow",
+  "rateControl": { "mode": "crf", "crf": 18, "maxrateKbps": 8000 },
+  "audioCodec": "aac",
+  "audioBitrateKbps": 192,
+  "audioSampleRate": 48000,
+  "faststart": true
+}

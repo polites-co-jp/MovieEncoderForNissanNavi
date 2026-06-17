@@ -1,0 +1,25 @@
+appId: jp.co.polites.movieencoderfornissannavi
+productName: MovieEncoderForNissanNavi
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - out/**/*
+  - package.json
+
+# ffmpeg / ffprobe バイナリは asar 外へ展開し、実行時にパス解決する
+asar: true
+asarUnpack:
+  - "node_modules/ffmpeg-static/**"
+  - "node_modules/ffprobe-static/**"
+
+win:
+  # v1 はポータブル zip のみ（自己展開型 portable ではなく zip ターゲット）
+  target:
+    - target: zip
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-win-x64-portable.${ext}
+
+# macOS は v1 では非対応（ターゲット未定義）

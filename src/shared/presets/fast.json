@@ -1,0 +1,17 @@
+{
+  "id": "fast",
+  "name": "高速変換",
+  "description": "速度優先。x264 veryfast、平均4000k。画質は若干低下。",
+  "profile": "high",
+  "level": "4.0",
+  "width": 1280,
+  "height": 720,
+  "frameRate": [30000, 1001],
+  "pixFmt": "yuv420p",
+  "x264Preset": "veryfast",
+  "rateControl": { "mode": "abr", "videoBitrateKbps": 4000 },
+  "audioCodec": "aac",
+  "audioBitrateKbps": 128,
+  "audioSampleRate": 48000,
+  "faststart": true
+}

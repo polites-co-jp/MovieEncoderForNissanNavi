@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieEncoder for Nissan Navi 取扱説明書</title>
+    <style>
+      :root {
+        --bg: #f5f6f8;
+        --panel: #ffffff;
+        --border: #e2e5ea;
+        --text: #1c2330;
+        --muted: #6b7280;
+        --primary: #2563eb;
+        --done: #16a34a;
+        --error: #dc2626;
+        --warning: #d97706;
+        --warning-bg: #fffbeb;
+        --warning-border: #fde68a;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.8;
+        font-size: 15px;
+      }
+      .layout { display: flex; max-width: 1100px; margin: 0 auto; }
+
+      /* 目次サイドバー */
+      nav.toc {
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        width: 240px;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 24px 16px;
+        border-right: 1px solid var(--border);
+        background: var(--panel);
+        flex-shrink: 0;
+      }
+      nav.toc .brand { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+      nav.toc .brand small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; }
+      nav.toc ol { list-style: none; padding: 0; margin: 16px 0 0; counter-reset: item; }
+      nav.toc li { counter-increment: item; margin: 2px 0; }
+      nav.toc a {
+        display: block;
+        padding: 6px 10px;
+        border-radius: 6px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 13px;
+      }
+      nav.toc a::before { content: counter(item) ". "; color: var(--muted); }
+      nav.toc a:hover { background: #eef4ff; color: var(--primary); }
+
+      main { flex: 1; min-width: 0; padding: 32px 40px 80px; }
+      header.doc-head { margin-bottom: 8px; }
+      header.doc-head h1 { font-size: 26px; margin: 0 0 4px; }
+      header.doc-head .sub { color: var(--muted); margin: 0; }
+      header.doc-head .ver { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+      section { scroll-margin-top: 16px; margin-top: 40px; }
+      h2 {
+        font-size: 20px;
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 6px;
+        margin: 0 0 14px;
+      }
+      h2 .num {
+        display: inline-block;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 6px;
+        width: 26px; height: 26px;
+        text-align: center; line-height: 26px;
+        font-size: 14px; margin-right: 8px;
+      }
+      h3 { font-size: 16px; margin: 24px 0 8px; }
+      p { margin: 8px 0; }
+      code {
+        background: #eef0f3;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-family: "Cascadia Code", "Consolas", monospace;
+        font-size: 13px;
+      }
+      ul, ol { padding-left: 22px; }
+      li { margin: 4px 0; }
+
+      table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+      th { background: #fafbfc; font-weight: 600; }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin: 14px 0;
+      }
+      .note, .warn, .tip {
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 14px 0;
+        border: 1px solid;
+      }
+      .warn { background: var(--warning-bg); border-color: var(--warning-border); }
+      .warn strong { color: var(--warning); }
+      .note { background: #eff6ff; border-color: #bfdbfe; }
+      .note strong { color: var(--primary); }
+      .tip { background: #f0fdf4; border-color: #bbf7d0; }
+      .tip strong { color: var(--done); }
+
+      /* 手順ステップ */
+      ol.steps { counter-reset: step; list-style: none; padding: 0; }
+      ol.steps > li {
+        counter-increment: step;
+        position: relative;
+        padding: 12px 16px 12px 56px;
+        margin: 10px 0;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      ol.steps > li::before {
+        content: counter(step);
+        position: absolute;
+        left: 14px; top: 12px;
+        width: 28px; height: 28px;
+        background: var(--primary); color: #fff;
+        border-radius: 50%;
+        text-align: center; line-height: 28px;
+        font-weight: 700;
+      }
+      ol.steps > li .st { font-weight: 700; display: block; }
+
+      .badge {
+        display: inline-block;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .b-wait { background: #eef0f3; color: #6b7280; }
+      .b-enc { background: #e0ecff; color: var(--primary); }
+      .b-done { background: #dcfce7; color: var(--done); }
+      .b-err { background: #fee2e2; color: var(--error); }
+      .b-cancel { background: #f3f4f6; color: #9ca3af; }
+
+      footer.doc-foot {
+        margin-top: 60px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      a.inline { color: var(--primary); }
+
+      @media (max-width: 800px) {
+        nav.toc { display: none; }
+        main { padding: 24px 18px 60px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="toc">
+        <div class="brand">
+          MovieEncoder<br />for Nissan Navi
+          <small>取扱説明書 v1.0</small>
+        </div>
+        <ol>
+          <li><a href="#about">このソフトについて</a></li>
+          <li><a href="#install">導入（インストール）</a></li>
+          <li><a href="#screen">画面の構成</a></li>
+          <li><a href="#usage">基本的な使い方</a></li>
+          <li><a href="#presets">プリセットの選び方</a></li>
+          <li><a href="#concurrency">同時実行数</a></li>
+          <li><a href="#output">出力先とファイル名</a></li>
+          <li><a href="#cancel">停止・キャンセル</a></li>
+          <li><a href="#log">ログの確認と保存</a></li>
+          <li><a href="#nav">ナビでの再生方法</a></li>
+          <li><a href="#trouble">困ったときは（FAQ）</a></li>
+          <li><a href="#spec">仕様・制限事項</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <header class="doc-head">
+          <h1>MovieEncoder for Nissan Navi 取扱説明書</h1>
+          <p class="sub">一般的な動画ファイルを、日産純正カーナビ MM521D-L 向けの MP4 へ一括変換するソフトです。</p>
+          <p class="ver">バージョン 1.0 / 対応OS: Windows 11</p>
+        </header>
+
+        <!-- 1 -->
+        <section id="about">
+          <h2><span class="num">1</span>このソフトについて</h2>
+          <p>
+            お手持ちの動画（mp4・mkv・avi・mov など）を、カーナビ
+            <strong>MM521D-L</strong> で再生しやすい形式（H.264 / 1280×720 の MP4）へ
+            まとめて変換します。難しい設定は不要で、ファイルをドラッグ＆ドロップして
+            「変換開始」を押すだけです。
+          </p>
+          <div class="warn">
+            <strong>はじめにお読みください（重要）</strong><br />
+            標準の出力設定は MM521D-L で一般的に再生しやすい値ですが、
+            <strong>すべての映像が実機で再生できることを保証するものではありません</strong>。
+            もし再生できない場合は、プリセットを
+            <code>Safe/Compat（互換フォールバック）</code> に変えてもう一度変換してください
+            （詳しくは <a class="inline" href="#trouble">11. 困ったときは</a>）。
+          </div>
+        </section>
+
+        <!-- 2 -->
+        <section id="install">
+          <h2><span class="num">2</span>導入（インストール）</h2>
+          <p>本ソフトは<strong>インストール不要のポータブル版</strong>です。</p>
+          <ol class="steps">
+            <li>
+              <span class="st">ZIP を展開する</span>
+              配布された <code>MovieEncoderForNissanNavi-1.0-win-x64-portable.zip</code> を、
+              書き込みできる任意のフォルダ（例: デスクトップやドキュメント）へ展開します。
+            </li>
+            <li>
+              <span class="st">exe を起動する</span>
+              展開したフォルダ内の <code>MovieEncoderForNissanNavi.exe</code> をダブルクリックします。
+            </li>
+          </ol>
+          <div class="note">
+            <strong>ポイント</strong><br />
+            設定ファイル（<code>config.json</code>）と既定の出力先フォルダ（<code>output</code>）は、
+            exe と同じフォルダに作られます。フォルダごとコピーすれば設定も一緒に持ち運べます。
+          </div>
+          <div class="warn">
+            <strong>注意：</strong> <code>C:\Program Files</code> など書き込み制限のある場所には展開しないでください。
+            設定や出力の保存に失敗することがあります。
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section id="screen">
+          <h2><span class="num">3</span>画面の構成</h2>
+          <table>
+            <tr><th>場所</th><th>内容</th></tr>
+            <tr><td>上部ツールバー</td><td>プリセット選択 / 同時実行数 / 「変換開始」「停止」「ログ保存」「全てクリア」</td></tr>
+            <tr><td>登録エリア（点線の枠）</td><td>動画やフォルダをドラッグ＆ドロップ。「ファイルを選択」ボタンでも追加可能。</td></tr>
+            <tr><td>ファイル一覧</td><td>登録した動画の名前・メディア情報・状態・進捗・残り時間・削除ボタン。</td></tr>
+            <tr><td>ログ（右側の黒い領域）</td><td>変換中の ffmpeg ログを表示。行をクリックするとそのファイルだけ絞り込み。</td></tr>
+          </table>
+        </section>
+
+        <!-- 4 -->
+        <section id="usage">
+          <h2><span class="num">4</span>基本的な使い方</h2>
+          <ol class="steps">
+            <li>
+              <span class="st">動画を登録する</span>
+              変換したい動画ファイルを登録エリアにドラッグ＆ドロップします。
+              <strong>フォルダごと</strong>ドロップすると、そのフォルダ<strong>直下</strong>の対応動画をまとめて登録します
+              （サブフォルダの中までは取り込みません）。「ファイルを選択」ボタンからも追加できます。
+            </li>
+            <li>
+              <span class="st">メディア情報を確認する</span>
+              登録すると、各行に解像度・コーデック・フレームレート・再生時間が自動表示されます。
+              読み取れないファイルは <span class="badge b-err">メタ取得失敗</span> と表示されますが、そのまま変換は試行できます。
+            </li>
+            <li>
+              <span class="st">プリセットと同時実行数を選ぶ</span>
+              通常は <code>Nissan MM521D-L（標準）</code> のままで構いません
+              （<a class="inline" href="#presets">5. プリセット</a> 参照）。
+            </li>
+            <li>
+              <span class="st">「変換開始」を押す</span>
+              押すと<strong>必ず出力先フォルダの選択ダイアログ</strong>が表示されます。保存先を選んで決定してください。
+            </li>
+            <li>
+              <span class="st">完了を待つ</span>
+              各ファイルが <span class="badge b-wait">待機中</span> →
+              <span class="badge b-enc">変換中</span> →
+              <span class="badge b-done">完了</span> と進みます。
+              すべて終わると完了ダイアログと Windows 通知が表示されます。
+            </li>
+          </ol>
+          <div class="tip">
+            <strong>ヒント：</strong> 途中で 1 つの動画がエラーになっても、残りの動画の変換はそのまま続行されます。
+          </div>
+        </section>
+
+        <!-- 5 -->
+        <section id="presets">
+          <h2><span class="num">5</span>プリセットの選び方</h2>
+          <table>
+            <tr><th>プリセット</th><th>特徴</th><th>こんなときに</th></tr>
+            <tr>
+              <td><strong>Nissan MM521D-L（標準）</strong></td>
+              <td>互換性重視。H.264 High / 720p / 平均4000kbps。</td>
+              <td>まずはこれ。迷ったら標準。</td>
+            </tr>
+            <tr>
+              <td>高画質</td>
+              <td>画質優先（CRF18・音声192k）。変換は遅め・容量大きめ。</td>
+              <td>画質を上げたいとき。</td>
+            </tr>
+            <tr>
+              <td>高速変換</td>
+              <td>速度優先。画質は少し落ちる。</td>
+              <td>大量の動画を素早く変換したいとき。</td>
+            </tr>
+            <tr>
+              <td>Safe/Compat（互換フォールバック）</td>
+              <td>Main / Level3.1・低めビットレートの保険設定。</td>
+              <td>標準で<strong>ナビが再生してくれないとき</strong>。</td>
+            </tr>
+          </table>
+          <div class="note">
+            <strong>設定を細かく変えたい方へ：</strong> プリセットの数値は
+            <code>（アプリフォルダ）/resources/app.asar.unpacked/...</code> ではなく、
+            ソース配布の <code>src/shared/presets/*.json</code> を編集して再ビルドすることで変更できます
+            （技術者向け。詳細は同梱の README / 設計書を参照）。
+          </div>
+        </section>
+
+        <!-- 6 -->
+        <section id="concurrency">
+          <h2><span class="num">6</span>同時実行数</h2>
+          <p>
+            一度に何本の動画を並行して変換するかを <strong>1〜8</strong> の範囲で選べます（初期値 3）。
+          </p>
+          <ul>
+            <li>数を増やすと全体が速く終わる場合がありますが、パソコンの負荷が高くなります。</li>
+            <li>動作が重いと感じたら <code>1</code> や <code>2</code> に下げてください。</li>
+          </ul>
+        </section>
+
+        <!-- 7 -->
+        <section id="output">
+          <h2><span class="num">7</span>出力先とファイル名</h2>
+          <h3>出力先</h3>
+          <p>
+            「変換開始」を押すと毎回フォルダ選択ダイアログが出ます。既定はアプリフォルダ内の
+            <code>output</code> フォルダです。選んだ 1 つのフォルダに、登録した全ファイルが出力されます。
+          </p>
+          <h3>ファイル名のルール</h3>
+          <ul>
+            <li>拡張子は <code>.mp4</code> になります（例: <code>旅行.mkv</code> → <code>旅行.mp4</code>）。</li>
+            <li>出力先に<strong>同じ名前がある場合のみ</strong>、<code>旅行 (1).mp4</code>、<code>旅行 (2).mp4</code> と番号が付きます。</li>
+            <li><strong>元のファイルや既存ファイルを上書きすることはありません。</strong></li>
+          </ul>
+          <div class="tip">
+            <strong>安全設計：</strong> 変換中は一時ファイルとして書き込み、<strong>成功したときだけ</strong>正式名に変わります。
+            途中で停止・失敗した場合の壊れた一時ファイルは自動で削除され、出力フォルダに残りません。
+          </div>
+        </section>
+
+        <!-- 8 -->
+        <section id="cancel">
+          <h2><span class="num">8</span>停止・キャンセル</h2>
+          <ul>
+            <li><strong>個別キャンセル：</strong> 一覧の各行の「削除」は<strong>待機中</strong>のみ可能です（変換中の行は削除できません）。</li>
+            <li><strong>全体停止：</strong> 変換中はツールバーのボタンが「停止」に変わります。押すと実行中の変換を止め、待機中のものも中止します。</li>
+          </ul>
+          <p>停止した場合は <span class="badge b-cancel">中止</span> と表示され、完了ダイアログには「変換を中止しました」と出ます。</p>
+        </section>
+
+        <!-- 9 -->
+        <section id="log">
+          <h2><span class="num">9</span>ログの確認と保存</h2>
+          <ul>
+            <li>右側のログ領域に、変換エンジン（ffmpeg）の出力がリアルタイムで表示されます。</li>
+            <li>ファイル一覧の行をクリックすると、その動画のログだけに絞り込めます（「✕ → 全て」で解除）。</li>
+            <li>ツールバーの「ログ保存」で、表示中の全ログをテキストファイル（UTF-8）に保存できます。</li>
+          </ul>
+          <div class="note">
+            <strong>うまくいかないとき：</strong> エラーになった動画はログにエラー内容（英語）が残ります。
+            原因の切り分けに役立つので、お問い合わせ時はログを保存して添えてください。
+          </div>
+        </section>
+
+        <!-- 10 -->
+        <section id="nav">
+          <h2><span class="num">10</span>ナビ（MM521D-L）での再生方法</h2>
+          <ol class="steps">
+            <li><span class="st">USB メモリを用意する</span>FAT32 でフォーマットした USB メモリを推奨します。</li>
+            <li><span class="st">変換した MP4 をコピーする</span>出力フォルダの <code>.mp4</code> を USB メモリへコピーします。</li>
+            <li><span class="st">車両の USB 端子に挿す</span>ナビの USB / メディア入力に接続します。</li>
+            <li><span class="st">ナビで動画ソースを選ぶ</span>ナビの「USB 動画」などのソースから再生します。</li>
+          </ol>
+          <div class="warn">
+            <strong>再生できないときは：</strong>
+            <ul style="margin:6px 0 0;">
+              <li>プリセットを <code>Safe/Compat</code> にして変換し直す。</li>
+              <li>ファイル名を半角英数の短い名前にしてみる（機種により長い名前や記号が苦手なことがあります）。</li>
+              <li>1 フォルダに入れるファイル数を減らす。</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 11 -->
+        <section id="trouble">
+          <h2><span class="num">11</span>困ったときは（FAQ）</h2>
+
+          <h3>Q. 変換した動画がナビで再生できません。</h3>
+          <p>A. プリセットを <code>Safe/Compat（互換フォールバック）</code> に変えて変換し直してください。
+             それでも再生できない場合は、ファイル名を短い半角英数にする・USB を FAT32 で再フォーマットする等もお試しください。</p>
+
+          <h3>Q. 「メタ取得失敗」と表示されます。</h3>
+          <p>A. ファイルが壊れているか、特殊な形式の可能性があります。そのまま変換を試すことはできますが、
+             失敗する場合はエラーとして表示され、他のファイルの処理は継続されます。</p>
+
+          <h3>Q. エラーになる動画があります。</h3>
+          <p>A. 主な原因と表示は次のとおりです。</p>
+          <table>
+            <tr><th>表示</th><th>主な原因・対処</th></tr>
+            <tr><td>ディスク容量不足の可能性があります</td><td>出力先ドライブの空き容量を確保してください。</td></tr>
+            <tr><td>書き込み権限がない可能性があります</td><td>書き込みできるフォルダを出力先に選んでください。</td></tr>
+            <tr><td>ファイルが破損しているか、対応できない形式です</td><td>元ファイルが壊れていないか確認してください。</td></tr>
+            <tr><td>変換に失敗しました（詳細はログを参照）</td><td>ログを保存して内容を確認してください。</td></tr>
+          </table>
+
+          <h3>Q. 変換がとても遅い／PC が重いです。</h3>
+          <p>A. 同時実行数を <code>1</code>〜<code>2</code> に下げる、または「高速変換」プリセットを使ってください。</p>
+
+          <h3>Q. 元の動画は消えますか？</h3>
+          <p>A. 消えません。本ソフトは新しい MP4 を作るだけで、元ファイルは変更も上書きもしません。</p>
+
+          <h3>Q. 同じ名前の動画を変換するとどうなりますか？</h3>
+          <p>A. 出力先に同名がある場合のみ、自動で <code>(1)</code> <code>(2)</code> と番号を付けて保存します。上書きはしません。</p>
+        </section>
+
+        <!-- 12 -->
+        <section id="spec">
+          <h2><span class="num">12</span>仕様・制限事項</h2>
+          <h3>標準出力仕様（Nissan 標準プリセット）</h3>
+          <table>
+            <tr><th>項目</th><th>値</th></tr>
+            <tr><td>コンテナ</td><td>MP4（faststart）</td></tr>
+            <tr><td>映像</td><td>H.264 (libx264) / High Profile / Level 4.0 / yuv420p</td></tr>
+            <tr><td>解像度</td><td>1280×720（アスペクト比維持・黒帯）</td></tr>
+            <tr><td>フレームレート</td><td>29.97fps</td></tr>
+            <tr><td>映像ビットレート</td><td>平均 4000kbps</td></tr>
+            <tr><td>音声</td><td>AAC-LC / 48kHz / 128kbps</td></tr>
+          </table>
+          <h3>対応入力形式</h3>
+          <p><code>mp4 / mkv / avi / mov / wmv / flv / m4v / ts / mts / m2ts / webm</code></p>
+          <h3>制限事項（v1）</h3>
+          <ul>
+            <li>GPU エンコード非対応（CPU での変換のみ）。</li>
+            <li>対応 OS は Windows 11 のみ（macOS 非対応）。</li>
+            <li>プリセットの画面上での編集はできません。</li>
+            <li>実機 MM521D-L での再生は保証外です（互換性は最終的にユーザー側でご確認ください）。</li>
+          </ul>
+        </section>
+
+        <footer class="doc-foot">
+          MovieEncoder for Nissan Navi v1.0 取扱説明書 ／
+          より詳しい技術情報は同梱の <code>README.md</code> ・ <code>docs/設計書.md</code> をご覧ください。
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

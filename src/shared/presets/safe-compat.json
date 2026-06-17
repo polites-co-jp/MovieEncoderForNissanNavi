@@ -1,0 +1,17 @@
+{
+  "id": "safe-compat",
+  "name": "Safe/Compat（互換フォールバック）",
+  "description": "標準で再生できない場合の保険。Main/Level3.1、低めビットレート。",
+  "profile": "main",
+  "level": "3.1",
+  "width": 1280,
+  "height": 720,
+  "frameRate": [30000, 1001],
+  "pixFmt": "yuv420p",
+  "x264Preset": "medium",
+  "rateControl": { "mode": "abr", "videoBitrateKbps": 2500 },
+  "audioCodec": "aac",
+  "audioBitrateKbps": 128,
+  "audioSampleRate": 48000,
+  "faststart": true
+}
