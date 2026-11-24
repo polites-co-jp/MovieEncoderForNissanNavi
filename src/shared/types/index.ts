@@ -15,7 +15,15 @@ export const SUPPORTED_EXTENSIONS = [
   'webm'
 ] as const
 
-export type JobStatus = 'waiting' | 'encoding' | 'done' | 'error' | 'canceled'
+/**
+ * staged: 一時領域への変換が済み、出力先への転記（全件終了後にファイル名順で実施）を待っている状態
+ */
+export type JobStatus = 'waiting' | 'encoding' | 'staged' | 'done' | 'error' | 'canceled'
+
+/** 実行中（一覧から削除できない）状態か */
+export function isJobBusy(status: JobStatus): boolean {
+  return status === 'encoding' || status === 'staged'
+}
 
 /** ffprobe で取得する映像メタ情報 */
 export interface MediaInfo {

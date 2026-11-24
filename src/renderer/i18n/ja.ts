@@ -26,6 +26,7 @@ export const t = {
 
   statusWaiting: '待機中',
   statusEncoding: '変換中',
+  statusStaged: '転記待ち',
   statusDone: '完了',
   statusError: 'エラー',
   statusCanceled: '中止',
@@ -39,6 +40,7 @@ export const t = {
 
   noFiles: 'ファイルが登録されていません',
   encoding: '変換中…',
+  stagedHint: '変換済み（名前順に転記します）',
 
   // ダイアログ
   doneTitle: '変換完了',
@@ -64,6 +66,8 @@ export function statusLabel(status: string): string {
       return t.statusWaiting
     case 'encoding':
       return t.statusEncoding
+    case 'staged':
+      return t.statusStaged
     case 'done':
       return t.statusDone
     case 'error':

@@ -256,6 +256,10 @@ body {
   background: #e0ecff;
   color: var(--primary);
 }
+.status-badge.status-staged {
+  background: #fef3c7;
+  color: #b45309;
+}
 .status-badge.status-done {
   background: #dcfce7;
   color: var(--done);

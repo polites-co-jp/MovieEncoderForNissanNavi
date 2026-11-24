@@ -7,6 +7,7 @@ import type {
   Preset,
   QueueSummary
 } from '@shared/types'
+import { isJobBusy } from '@shared/types'
 
 interface StoreLogLine extends LogLine {
   seq: number
@@ -76,14 +77,14 @@ export const useStore = create<AppState>((set) => ({
 
   removeJob: (id) =>
     set((state) => ({
-      // 変換中は削除しない（待機中のみ削除可）
-      jobs: state.jobs.filter((j) => !(j.id === id && j.status !== 'encoding'))
+      // 変換中・転記待ちは削除しない
+      jobs: state.jobs.filter((j) => !(j.id === id && !isJobBusy(j.status)))
     })),
 
   clearJobs: () =>
     set((state) => ({
-      // 変換中の行は残す
-      jobs: state.jobs.filter((j) => j.status === 'encoding')
+      // 変換中・転記待ちの行は残す
+      jobs: state.jobs.filter((j) => isJobBusy(j.status))
     })),
 
   applyUpdate: (u) =>

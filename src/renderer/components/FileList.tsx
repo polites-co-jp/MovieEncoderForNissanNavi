@@ -1,6 +1,6 @@
 import { useStore } from '../store/useStore'
 import { t, statusLabel, formatEta, formatDuration } from '../i18n/ja'
-import type { JobState } from '@shared/types'
+import { isJobBusy, type JobState } from '@shared/types'
 
 function MediaInfoCell({ job }: { job: JobState }): JSX.Element {
   const m = job.media
@@ -20,6 +20,7 @@ function ProgressCell({ job }: { job: JobState }): JSX.Element {
     return <span className="error-text">{job.errorReason ?? t.statusError}</span>
   if (job.status === 'canceled') return <span className="muted">—</span>
   if (job.status === 'waiting') return <span className="muted">—</span>
+  if (job.status === 'staged') return <span className="muted">{t.stagedHint}</span>
   // encoding
   const pct = job.progress
   return (
@@ -84,7 +85,7 @@ export function FileList(): JSX.Element {
               <button
                 type="button"
                 className="btn-link"
-                disabled={job.status === 'encoding'}
+                disabled={isJobBusy(job.status)}
                 onClick={(e) => {
                   e.stopPropagation()
                   removeJob(job.id)
